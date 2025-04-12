@@ -54,8 +54,22 @@ public interface IIngredienteDAO {
      * @throws PersistenciaException Si el id del ingrediente no existe.
      */
     public Ingrediente consultarIngredientePorId(Long idIngrediente) throws PersistenciaException;
-    
+
+    /**
+     * Obtiene la cantidad de veces que se repite un ingrediente con el nombre especificado.
+     * 
+     * @param nombreIngrediente El nombre del ingrediente que se va a buscar.
+     * @return La cantidad de veces que se repite el nombre del ingrediente en la base de datos.
+     * @throws PersistenciaException Si ocurre un error al intentar acceder a la base de datos.
+     */
     public Long obtenerNombresRepetidosDeProducto(String nombreIngrediente) throws PersistenciaException;
-    
+
+    /**
+     * Realiza una búsqueda de ingredientes en la base de datos utilizando el nombre del ingrediente.
+     * 
+     * @param nombre El nombre o parte del nombre del ingrediente que se va a buscar.
+     * @return Una lista de ingredientes que coinciden con el criterio de búsqueda.
+     * @throws PersistenciaException Si ocurre un error al intentar realizar la consulta.
+     */
     public List<Ingrediente> buscadorComandas(String nombre) throws PersistenciaException;
 }

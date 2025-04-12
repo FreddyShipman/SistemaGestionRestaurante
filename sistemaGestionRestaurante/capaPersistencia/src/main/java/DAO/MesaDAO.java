@@ -16,7 +16,12 @@ import javax.persistence.TypedQuery;
  *
  * @author janot
  */
+/**
+ * Clase que implementa la interfaz IMesaDAO para manejar las operaciones de persistencia
+ * relacionadas con las mesas en la base de datos.
+ */
 public class MesaDAO implements IMesaDAO{
+    
     private static MesaDAO instanceMesaDAO;
     
     /**
@@ -27,6 +32,7 @@ public class MesaDAO implements IMesaDAO{
     
     /**
      * Método para obtener la única instancia de MesaDAO.
+     * Utiliza el patrón Singleton para asegurar que solo haya una instancia de esta clase.
      *
      * @return Instancia de MesaDAO.
      */
@@ -37,6 +43,13 @@ public class MesaDAO implements IMesaDAO{
         return instanceMesaDAO;
     }
     
+    /**
+     * Agrega un número de mesas al sistema.
+     * 
+     * @param cantidadMesas La cantidad de mesas a agregar.
+     * @return true si las mesas fueron agregadas correctamente, false si ocurrió un error.
+     * @throws PersistenciaException Si ocurre un error al registrar las mesas.
+     */
     @Override
     public boolean agregarMesas(int cantidadMesas) throws PersistenciaException {
         EntityManager em = Conexion.crearConexion();
@@ -64,6 +77,12 @@ public class MesaDAO implements IMesaDAO{
         }
     }
 
+    /**
+     * Consulta todas las mesas registradas en la base de datos.
+     *
+     * @return Lista de todas las mesas.
+     * @throws PersistenciaException Si ocurre un error al consultar las mesas.
+     */
     @Override
     public List<Mesa> consultarMesas() throws PersistenciaException {
         List<Mesa> mesas = new ArrayList<>();
@@ -73,8 +92,7 @@ public class MesaDAO implements IMesaDAO{
             mesas = em.createQuery("SELECT m FROM Mesa m", Mesa.class).getResultList();
             
         } catch (Exception e) {
-            throw new PersistenciaException("Error al consultar a todas las mesas", e);
-            
+            throw new PersistenciaException("Error al consultar todas las mesas", e);
         } finally {
             if (em.isOpen()) {
                 em.close();
@@ -84,20 +102,26 @@ public class MesaDAO implements IMesaDAO{
         return mesas;
     }
 
+    /**
+     * Consulta todas las mesas que están disponibles.
+     *
+     * @return Lista de mesas disponibles.
+     * @throws PersistenciaException Si ocurre un error al consultar las mesas disponibles.
+     */
     @Override
     public List<Mesa> consultarMesasDisponibles() throws PersistenciaException {
         List<Mesa> mesas = new ArrayList<>();
         EntityManager em = Conexion.crearConexion();
         
         String jpql = "SELECT m FROM Mesa m WHERE m.estadoMesa= :estadoMesa";
+        
         try {
             TypedQuery<Mesa> query = em.createQuery(jpql, Mesa.class);
             query.setParameter("estadoMesa", EstadoMesa.DISPONIBLE);
             mesas = query.getResultList();
             
         } catch (Exception e) {
-            throw new PersistenciaException("Error al consultar a todas las mesas", e);
-            
+            throw new PersistenciaException("Error al consultar las mesas disponibles", e);
         } finally {
             if (em.isOpen()) {
                 em.close();
@@ -107,6 +131,14 @@ public class MesaDAO implements IMesaDAO{
         return mesas;
     }
 
+    /**
+     * Cambia el estado de una mesa en la base de datos.
+     *
+     * @param idMesa El ID de la mesa a actualizar.
+     * @param estadoMesa El nuevo estado de la mesa.
+     * @return true si el estado fue actualizado correctamente, false si ocurrió un error.
+     * @throws PersistenciaException Si ocurre un error al actualizar el estado de la mesa.
+     */
     @Override
     public boolean cambiarEstadoDeMesa(Long idMesa, EstadoMesa estadoMesa) throws PersistenciaException {
         EntityManager em = Conexion.crearConexion();
@@ -118,7 +150,7 @@ public class MesaDAO implements IMesaDAO{
         Mesa mesa = em.find(Mesa.class, idMesa);
         
         if(mesa == null){
-            throw new PersistenciaException("Error: El id de la comanda no existe");
+            throw new PersistenciaException("Error: El id de la mesa no existe");
         }
         
         mesa.setEstadoMesa(estadoMesa);
@@ -134,7 +166,7 @@ public class MesaDAO implements IMesaDAO{
             if (em.getTransaction().isActive()) {
                 em.getTransaction().rollback();
             }
-            throw new PersistenciaException("No se pudo actualizar el estado de la mesa: " + e.getMessage());
+            throw new PersistenciaException("No se pudo actualizar el estado de la mesa: " + e.getMessage(), e);
             
         } finally {
             if (em.isOpen()) {

@@ -66,8 +66,21 @@ public interface IProductoDAO {
      */
     public List<IngredienteProducto> consultarIngredientesDelProducto(Long idProducto) throws PersistenciaException; 
     
+    /**
+     * Consulta todos los productos habilitados en la base de datos.
+     * 
+     * @return Una lista de productos habilitados.
+     * @throws PersistenciaException Si ocurre un error al intentar realizar la consulta.
+     */
     public List<Producto> consultarProductosHabilitados() throws PersistenciaException;
-    
+
+    /**
+     * Realiza una búsqueda de productos en la base de datos filtrando por tipo de producto y/o por un término de búsqueda.
+     * 
+     * @param tipoProducto El tipo de producto por el que se desea filtrar (por ejemplo, comida, bebida).
+     * @param busqueda Un término de búsqueda adicional para filtrar los productos por nombre u otras propiedades.
+     * @return Una lista de productos que coinciden con los criterios de búsqueda.
+     * @throws PersistenciaException Si ocurre un error al intentar realizar la consulta.
+     */
     public List<Producto> busquedaProductos(TipoProducto tipoProducto, String busqueda) throws PersistenciaException;
-    
 }
