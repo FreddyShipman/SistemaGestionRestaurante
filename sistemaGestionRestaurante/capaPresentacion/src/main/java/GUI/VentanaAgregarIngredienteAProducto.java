@@ -18,7 +18,7 @@ import utils.SoloFiltroNumerico;
 
 /**
  *
- * @author janot
+ * @author alfre
  */
 public class VentanaAgregarIngredienteAProducto extends javax.swing.JDialog {
     private Control control = new Control();

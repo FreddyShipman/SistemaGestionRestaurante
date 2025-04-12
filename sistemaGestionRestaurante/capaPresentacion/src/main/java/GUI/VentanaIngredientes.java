@@ -16,8 +16,8 @@ import manejadoresDeObjetoNegocio.ManejadorObjetosNegocio;
  */
 public class VentanaIngredientes extends javax.swing.JFrame {
     private Control control = new Control();
-    private IIngredienteBO ingredienteBO;
-    private List<Ingrediente> ingredientes = new ArrayList<>();
+    public IIngredienteBO ingredienteBO;
+    public List<Ingrediente> ingredientes = new ArrayList<>();
     
     /**
      * Creates new form VentanaIngredientes
@@ -216,7 +216,7 @@ public class VentanaIngredientes extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jTableIngredientesMouseClicked
 
-    private void asignarIngredientesALista(){
+    public void asignarIngredientesALista(){
         try {
             ingredientes = ingredienteBO.consultarTodosLosIngredientes();
         } catch (NegocioException e) {
@@ -225,7 +225,7 @@ public class VentanaIngredientes extends javax.swing.JFrame {
     }
     
     
-    private void cargarDatosTabla(){    
+    public void cargarDatosTabla(){    
         DefaultTableModel model = (DefaultTableModel) jTableIngredientes.getModel();
         model.setRowCount(0);
         for (Ingrediente ingrediente : ingredientes) {
