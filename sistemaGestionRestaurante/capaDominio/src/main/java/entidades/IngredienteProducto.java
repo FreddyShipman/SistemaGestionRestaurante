@@ -14,7 +14,7 @@ import javax.persistence.Table;
  * Representa la relación entre un ingrediente y un producto en el sistema.
  * Cada producto puede estar compuesto por varios ingredientes en cantidades específicas.
  * 
- * @author janot
+ * @author alfre
  */
 @Entity
 @Table(name = "IngredientesProductos")

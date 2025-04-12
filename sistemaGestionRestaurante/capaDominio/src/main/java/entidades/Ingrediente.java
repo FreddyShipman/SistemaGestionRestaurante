@@ -19,7 +19,7 @@ import javax.persistence.Table;
  * Representa un ingrediente utilizado en la preparación de productos.
  * Cada ingrediente tiene un nombre, una unidad de medida y una cantidad en stock.
  * 
- * @author janot
+ * @author alfre
  */
 @Entity
 @Table(name = "Ingredientes")
